@@ -23,5 +23,5 @@ npm i
 4. Start Client
 
 ```shell
-npm dev run
+npm run dev
 ```
