@@ -74,7 +74,6 @@ const updateQrCode = async (req, res) => {
 }
 
 module.exports = {
-	// crud_index,
 	getQrCodes,
     getQrCode,
 	createQrCode,
