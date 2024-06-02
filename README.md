@@ -1,4 +1,4 @@
-# Generate QR API
+# Generate QR Codes API
 
 Generate QR API is a RESTful service that allows users to create, update, retrieve, and delete QR codes. This API is built using Node.js and Mongoose for MongoDB interaction. Each QR code is associated with a unique ID, and the system also generates a short URL for each QR code.
 
