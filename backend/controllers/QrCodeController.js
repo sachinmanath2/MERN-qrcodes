@@ -2,6 +2,7 @@ const QrcodeModel = require("../models/QrcodeModel");
 const mongoose = require("mongoose")
 const ipLib = require('ip');
 const short = require('shortid');
+const QRCode = require('qrcode');
 
 // Get All QR codes
 const getQrCodes = async (req, res) => {
@@ -30,15 +31,22 @@ const getQrCode = async (req, res) => {
 const createQrCode = async (req, res) => {
     const {url, name} = req.body;
 
-    // Get IP and short name
-    var ip = ipLib.address();
-    var short_url = short();
-    try {        
-        const qrcode = await QrcodeModel.create({url, name, ip, short_url})
-        return  res.status(200).json(qrcode)
-    } catch(error){
-        return  res.status(400).json({error: error.message})
-    }
+    QRCode.toDataURL(url, function (err, qr_code) {
+        if (err) throw err;        
+        try {
+            // Get IP and short name
+            var ip = ipLib.address();
+            var short_url = short();
+
+            const qrcodeRes = QrcodeModel.create({url, name, ip, short_url, qr_code})            
+            qrcodeRes.then(function(result) {                
+                return  res.status(200).json(result)
+             })
+        } catch(error){
+            return  res.status(400).json({error: error.message})
+        }
+    })
+    
 }
 
 // Delete QR code
